@@ -540,7 +540,7 @@ __metadata:
     axios: ^1.2.1
     eslint: 8.30.0
     eslint-config-next: 13.1.1
-    next: 13.1.1
+    next: ^13.1.1
     react: 18.2.0
     react-dom: 18.2.0
   languageName: unknown
@@ -1796,7 +1796,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next@npm:13.1.1":
+"next@npm:^13.1.1":
   version: 13.1.1
   resolution: "next@npm:13.1.1"
   dependencies:

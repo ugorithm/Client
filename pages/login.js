@@ -5,8 +5,6 @@ export default function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
-    
-    
     const handleSubmit = async (e) => {
       e.preventDefault();
       const user = {
@@ -34,8 +32,8 @@ export default function Login() {
       <>
         <h1>Login</h1>
         <form>
-          <input type="text" id="username" name="username" onChange={e => setUsername(e.target.value)} />
-          <input type="text" id="password" name="password" onChange={e => setPassword(e.target.value)} />
+          Username: <input type="text" id="username" name="username" onChange={e => setUsername(e.target.value)} />
+          Password: <input type="text" id="password" name="password" onChange={e => setPassword(e.target.value)} />
           <button type="submit" onClick={handleSubmit}>Log in</button>
         </form>
       </>

@@ -5,6 +5,8 @@ export default function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
+    const router = useRouter();
+
     const handleSubmit = async (e) => {
       e.preventDefault();
       const user = {
@@ -24,9 +26,15 @@ export default function Login() {
       fetch("http://localhost:3000/auth/login", settings)
         .then((data) => data.json())
         .then(userData => {
-          
+          console.log(userData);
+          router.push("http://localhost:3001")
+          setTimeout(200)
         })
     }
+
+    useEffect(() => {
+      router.prefetch("http://localhost:3001")
+    }, [])
     
     return (
       <>

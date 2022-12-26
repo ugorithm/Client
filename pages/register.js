@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import "next/router"
+import { useRouter } from 'next/router'
 
 export default function Register() {
     const [username, setUsername] = useState("");
@@ -8,34 +8,37 @@ export default function Register() {
 
     const router = useRouter()
 
+    const href = "http://localhost:3001/login"
+
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        router.push("")
+        router.push(href);
 
-        // if (password !== password2) {
-        //     throw new Error("Passwords does not match")
-        // }
+        if (password !== password2) {
+            throw new Error("Passwords does not match")
+        }
 
-        // const user = {
-        //     username,
-        //     password
-        // };
+        const user = {
+            username,
+            password
+        };
     
-        // const settings = {
-        //     method: "POST",
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify(user)
-        //   };
+        const settings = {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(user)
+          };
     
-        //   fetch("http://localhost:3000/auth/register", settings)
-        //     .then((data) => data.json())
-        //     .then(userData => {
-        //       console.log(`${userData}`);
-              
-        //     })
+          fetch("http://localhost:3000/auth/register", settings)
+            .then((data) => data.json())
+            .then(userData => {
+              console.log(`${userData}`);
+              router.push(href);     
+            })
     }
     return (
       <>

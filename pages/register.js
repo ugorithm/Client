@@ -8,7 +8,7 @@ export default function Register() {
 
     const router = useRouter()
 
-    const href = "http://localhost:3001/login"
+    const href = "http://localhost:3000/login"
 
 
     const handleSubmit = async (e) => {
@@ -33,7 +33,7 @@ export default function Register() {
             body: JSON.stringify(user)
           };
     
-          fetch("http://localhost:3000/auth/register", settings)
+          fetch("http://localhost:3001/auth/register", settings)
             .then((data) => data.json())
             .then(userData => {
               console.log(`${userData}`);

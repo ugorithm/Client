@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useRouter } from 'next/router';
-import { refreshKeyContext } from "../UserContext";
+import { refreshKeyContext } from "../context/RefreshKeyContext";
 
 export default function Login() {
     const [username, setUsername] = useState("");
@@ -25,17 +25,21 @@ export default function Login() {
         body: JSON.stringify(user)
       };
 
-      fetch("http://localhost:3000/auth/login", settings)
+      fetch("http://localhost:3001/auth/login", settings)
         .then((data) => data.json())
         .then(userData => {
-          router.push("http://localhost:3001")
-          setTimeout(200)
-          setRefreshKey(JSON.stringify(userData["refresh_key"]))
+          
+          const refreshData = {
+            "refresh_key": userData["refresh_key"]
+          }
+          setRefreshKey(refreshData);
+
+          router.push("http://localhost:3000")
         })
     }
 
     useEffect(() => {
-      router.prefetch("http://localhost:3001")
+      router.prefetch("http://localhost:3000")
     }, [])
     
     return (

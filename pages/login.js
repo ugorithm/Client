@@ -1,11 +1,13 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useRouter } from 'next/router';
+import { refreshKeyContext } from "../UserContext";
 
 export default function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-
     const router = useRouter();
+
+    const { refreshKey, setRefreshKey } = useContext(refreshKeyContext);
 
     const handleSubmit = async (e) => {
       e.preventDefault();
@@ -26,9 +28,9 @@ export default function Login() {
       fetch("http://localhost:3000/auth/login", settings)
         .then((data) => data.json())
         .then(userData => {
-          console.log(userData);
           router.push("http://localhost:3001")
           setTimeout(200)
+          setRefreshKey(JSON.stringify(userData["refresh_key"]))
         })
     }
 

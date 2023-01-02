@@ -1,6 +1,5 @@
 import '../styles/globals.css'
 import { useState, useMemo } from "react"
-import { refreshKeyContext } from "../context/RefreshKeyContext";
  
 export default function App({ Component, pageProps }) {
 
@@ -10,9 +9,7 @@ export default function App({ Component, pageProps }) {
 
   return (
   <>
-    <refreshKeyContext.Provider value={providerValue}>
       <Component {...pageProps} />
-    </refreshKeyContext.Provider>
   </>
   )
 }

@@ -1,13 +1,16 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useRouter } from 'next/router';
-import { refreshKeyContext } from "../context/RefreshKeyContext";
+import axios from "axios"
+import useStore from "../stores/auth";
 
 export default function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+
     const router = useRouter();
 
-    const { refreshKey, setRefreshKey } = useContext(refreshKeyContext);
+    const create = useStore((state) => state.create)
+    
 
     const handleSubmit = async (e) => {
       e.preventDefault();
@@ -16,32 +19,20 @@ export default function Login() {
         password
       };
 
-      const settings = {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(user)
-      };
+      const resp = await axios.post("http://localhost:3001/auth/login", user)
 
-      fetch("http://localhost:3001/auth/login", settings)
-        .then((data) => data.json())
-        .then(userData => {
-          
-          const refreshData = {
-            "refresh_key": userData["refresh_key"]
-          }
-          setRefreshKey(refreshData);
+      create(resp.data["refresh_key"])
 
-          router.push("http://localhost:3000")
-        })
+      localStorage.setItem("refresh_key", resp.data["refresh_key"])
+
+      router.push("http://localhost:3000/") 
     }
 
     useEffect(() => {
       router.prefetch("http://localhost:3000")
     }, [])
     
+
     return (
       <>
         <h1>Login</h1>

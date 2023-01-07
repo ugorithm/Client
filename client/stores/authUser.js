@@ -2,14 +2,13 @@ import create from "zustand";
 import { devtools, persist } from "zustand/middleware";
 
 let store = (set, get) => ({
-    refreshKey: "0",
-    loggedIn: false,
-    logIn: (userData) => set((state) => ({ refreshKey: userData })),
-    logOut: () => set((state) => ({ refreshKey: "0" }))
+    SID: null,
+    logIn: (payload) => set((state) => ({ SID: payload })),
+    logOut: () => set((state) => ({ SID: null }))
 });
 
 store = devtools(store);
-store = persist(store, { name: "likes", getStorage: () => sessionStorage });
+store = persist(store, { name: "SID", getStorage: () => localStorage });
 
 const useAuth = create(store);
 

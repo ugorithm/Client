@@ -3,7 +3,18 @@ import useAuth from "../stores/authUser";
 import axios from "axios";
 import { useRouter } from "next/router";
 
-import { Button, ButtonProps, Group } from '@mantine/core';
+import {
+    TextInput,
+    PasswordInput,
+    Checkbox,
+    Anchor,
+    Paper,
+    Title,
+    Text,
+    Container,
+    Group,
+    Button,
+  } from '@mantine/core';
 
 export default function Login() {
 
@@ -33,15 +44,15 @@ export default function Login() {
 
     return (
         <>
-            <form>
-                <h4>Username</h4>
-                <input type="text" id="username" name="username" defaultValue="Rohak" ref={userRef} />
-                <h4>Password</h4>
-                <input type="password" id="password" name="password" defaultValue="Rohak123" ref={passwordRef} />
-                <br />
-                <button onClick={handleLogin}>Login</button>
-            </form>
-            <Button>Mantine UI Button</Button>
+            <Container>
+                <Paper withBorder shadow="md" p={30} mt={30} radius="md">
+                <form>
+                    <TextInput label="Username" placeholder="you@mantine.dev" required ref={userRef} />
+                    <PasswordInput label="Password" placeholder="Your password" required mt="md" ref={passwordRef} />
+                    <Button fullWidth mt="xl" onClick={handleLogin}>Log in</Button>
+                </form>
+                </Paper>
+            </Container>
         </>
     )
 }

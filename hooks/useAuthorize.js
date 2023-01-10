@@ -9,7 +9,7 @@ export default function useAuthorize(ID) {
 
     useEffect(() => {
         const payload = {
-            "sessionID": "jc7fzz_8sjKTPXIai4n0XqvsviZWtHSe"
+            "sessionID": "sdf_324s" // temp
         };
 
         const fetchData = async () => {

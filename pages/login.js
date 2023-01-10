@@ -35,11 +35,11 @@ export default function Login() {
     const resp = await axios.post("https://Server.ugorithm.repl.co/auth/login", userPayload);
     const SIDPayload = resp.data["user"].SID;
     logIn(SIDPayload); // set SID state to retreived SID
-    router.push("https://client-1.ugorithm.repl.co/");
+    router.push("http://localhost:3000/dashboard");
   }
 
   useEffect(() => {
-    router.prefetch("https://client-1.ugorithm.repl.co/")
+    router.prefetch("http://localhost:3000/dashboard")
   }, [router]);
 
   return (

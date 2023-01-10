@@ -30,11 +30,8 @@ export default function Register() {
         const password = passwordRef.current.value;
         const conPassword = conPasswordRef.current.value; 
 
-        console.log(password)
-        console.log(conPassword)
-
         if (password === conPassword) {
-            console.log("password does not match"); // we need a proper error message or error page
+            console.log("passwords does not match"); // we need a proper error message or error page
             return;
         }
 

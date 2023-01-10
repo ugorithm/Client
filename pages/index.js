@@ -8,34 +8,38 @@ export default function Home() {
 
   const router = useRouter();
 
-  const SID = useAuth((state) => state.SID);
   const [username, setUsername] = useState("");
   const logout = useAuth((state) => state.logOut);
+  const SID = useAuth((state) => state.SID);
+
+  const [isFetched, setIsFetched] = useState(false);
 
   const handleLogOut = (e) => {
     e.preventDefault();
     logout();
   }
 
+  const payload = {
+    "sessionID": SID
+  };
+
+  async function fetchData() {
+    const resp = await axios.post("https://Server.ugorithm.repl.co/auth/getsession", payload)
+
+    if (!resp.data["userPayload"]) {
+      router.push("https://client-1.ugorithm.repl.co/login")
+    } else {
+      setUsername(resp.data["userPayload"]?.username);
+    }
+  }
+
   useEffect(() => {
-    const payload = {
-      "sessionID": SID
-    };
-
-    axios.post("http://localhost:3001/auth/getsession", payload)
-      .then(data => {
-
-        if (!data.data["userPayload"]) {
-          router.push("http://localhost:3000/login")
-        }
-
-        if (data.status === 401) {
-          setUsername("Not logged in")
-        } else {
-          setUsername(data.data["userPayload"]?.username);
-        }
-      })
-  }, [SID, username, logout, router])
+    if (isFetched === false) {
+      fetchData().then(() => setIsFetched(true))
+    } else {
+      return;
+    }
+  }, [SID, username, logout, router, fetchData])
 
   return (
     <>

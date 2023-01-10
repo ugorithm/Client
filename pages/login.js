@@ -28,10 +28,12 @@ export default function Login() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    
     const userPayload = {
       "username": userRef.current.value,
       "password": passwordRef.current.value
     }
+
     const resp = await axios.post("https://Server.ugorithm.repl.co/auth/login", userPayload);
     const SIDPayload = resp.data["user"].SID;
     logIn(SIDPayload); // set SID state to retreived SID

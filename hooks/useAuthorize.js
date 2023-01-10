@@ -4,18 +4,27 @@ import axios from "axios";
 export default function useAuthorize(ID) {
     const [data, setData] = useState(null);
     const [error, setError] = useState(false);
-    const isLoading = useRef(false);
+    const [loading, setLoading] = useState(false);
 
-    const fetchData = async () => {
-        const resp = await axios.get("https://server.ugorithm.repl.co/auth/db").then(isLoading.current = true)
-        setData(resp.data);
-    }
 
     useEffect(() => {
-        if (isLoading.current) return;
-        fetchData()
-        isLoading.current = false;
-    }, [ID]);
+        const payload = {
+            "sessionID": "jc7fzz_8sjKTPXIai4n0XqvsviZWtHSe"
+        };
 
-    return { data, isLoading, error };
+        const fetchData = async () => {
+            try {
+                setLoading(true);
+                const resp = await axios.post("https://server.ugorithm.repl.co/auth/getsession", payload)
+                setData(resp.data);
+            } catch (err) {
+                console.log(err);
+            }
+
+        }
+        fetchData()
+        setLoading(false);
+    }, [setLoading]);
+
+    return { data, loading, error };
 }

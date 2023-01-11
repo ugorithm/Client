@@ -1,24 +1,31 @@
+import { useRouter } from "next/router";
 import { useEffect } from "react";
 import useAuthorize from "../hooks/useAuthorize"
 import useAuth from "../stores/authUser"
 
 export default function Test() {
 
-    // const SID = useAuth((state) => state.SID);
-    const SID = "olNsZTQLMDeS_2MM-q5xGf520oJ3cltk";
+    const router = useRouter();
 
-    const { data, isLoading, error } = useAuthorize(SID);
+    const { authenticated, loading, error } = useAuthorize();
 
-    if (error) console.log(error);
+    if (error) console.log("There's an error");
 
     useEffect(() => {
-        console.log(data);
-    })
+        if (loading === true) return;
+        if (authenticated === false) {
+            console.log("not authed")
+            router.push("http://localhost:3000/login");
+        }
+        if (!authenticated) {
+            console.log("thing is null")
+        }
+    }, [loading, authenticated, router])
 
     return (
         <>
             <h1>Testing custom hooks</h1>
-            <p>{JSON.stringify(data)}</p>
+            <p>{JSON.stringify(authenticated)}</p>
         </>
     )
 }

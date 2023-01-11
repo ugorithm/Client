@@ -2,47 +2,37 @@ import axios from "axios";
 import { useEffect, useState, useRef } from "react";
 import useAuth from "../stores/authUser";
 import { useRouter } from "next/router";
+import useAuthorize from "../hooks/useAuthorize";
 
 export default function Dashboard() {
 
   const router = useRouter();
 
-  const [username, setUsername] = useState("");
   const logout = useAuth((state) => state.logOut);
-  const SID = useAuth((state) => state.SID);
-
-  const isFetched = useRef(false);
 
   const handleLogOut = (e) => {
     e.preventDefault();
     logout();
     router.push("http://localhost:3000/login")
   }
+  const { authenticated, loading, error } = useAuthorize();
 
+  if (error) console.log("There's an error");
 
-  useEffect(() => {
-    const payload = {
-      "sessionID": SID
-    };
-
-    if (isFetched.current) return;
-    isFetched.current = true;
-
-    async function fetchData() {
-      const resp = await axios.post("https://Server.ugorithm.repl.co/auth/getsession", payload)
-  
-      if (resp.data["authenticated"] === false) {
-        router.push("http://localhost:3000/login");
-      } else {
-        setUsername(resp.data.userPayload["username"])
-      }
-    }
-    fetchData();
-  }, [logout, router, SID]);
+  // useEffect(() => {
+  //     if (loading === false) {
+  //       if (authenticated === false) {
+  //         router.push("http://localhost:3000/login");
+  //         console.log(authenticated, loading);
+  //       } else if (authenticated === true) {
+  //         console.log("Loaded and authed")
+  //       }
+  //     }
+  // }, [loading, authenticated, router])
 
   return (
     <>
-      <h1>Welcome {username}</h1>
+      <h1>Dashboard</h1>
       <button onClick={handleLogOut}>Logout</button>
     </>
   )

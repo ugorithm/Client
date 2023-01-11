@@ -37,11 +37,11 @@ export default function Login() {
     const resp = await axios.post("https://Server.ugorithm.repl.co/auth/login", userPayload);
     const SIDPayload = resp.data["user"].SID;
     logIn(SIDPayload); // set SID state to retreived SID
-    router.push("http://localhost:3000/dashboard");
+    router.push("https://client-iota-orpin.vercel.app/dashboard");
   }
 
   useEffect(() => {
-    router.prefetch("http://localhost:3000/dashboard")
+    router.prefetch("https://client-iota-orpin.vercel.app/dashboard")
   }, [router]);
 
   return (

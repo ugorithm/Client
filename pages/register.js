@@ -42,7 +42,7 @@ export default function Register() {
 
         try {
             const resp = await axios.post("https://Server.ugorithm.repl.co/auth/register", userPayload);
-            router.push("http://localhost:3000/login");
+            router.push("https://client-iota-orpin.vercel.app/login");
         }catch (error){
             console.error(error); // we need a proper error message or error page according to the status code we received
         }
@@ -50,7 +50,7 @@ export default function Register() {
     }
    
     useEffect(() => {
-        router.prefetch("http://localhost:3000/dashboard")
+        router.prefetch("https://client-iota-orpin.vercel.app/dashboard")
     }, [router]);
 
     return (

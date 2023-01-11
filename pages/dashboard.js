@@ -16,7 +16,7 @@ export default function Dashboard() {
   const handleLogOut = (e) => {
     e.preventDefault();
     logout();
-    router.push("http://localhost:3000/login")
+    router.push("https://client-iota-orpin.vercel.app/login")
   }
 
 
@@ -32,7 +32,7 @@ export default function Dashboard() {
       const resp = await axios.post("https://Server.ugorithm.repl.co/auth/getsession", payload)
   
       if (resp.data["authenticated"] === false) {
-        router.push("http://localhost:3000/login");
+        router.push("https://client-iota-orpin.vercel.app/login");
       } else {
         setUsername(resp.data.userPayload["username"])
       }

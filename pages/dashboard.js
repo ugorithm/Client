@@ -10,6 +10,8 @@ export default function Dashboard() {
 
   const logout = useAuth((state) => state.logOut);
 
+  const SID = useAuth((state) => state.SID);
+
   const handleLogOut = (e) => {
     e.preventDefault();
     logout();
@@ -19,16 +21,22 @@ export default function Dashboard() {
 
   if (error) console.log("There's an error");
 
-  // useEffect(() => {
-  //     if (loading === false) {
-  //       if (authenticated === false) {
-  //         router.push("http://localhost:3000/login");
-  //         console.log(authenticated, loading);
-  //       } else if (authenticated === true) {
-  //         console.log("Loaded and authed")
-  //       }
-  //     }
-  // }, [loading, authenticated, router])
+  useEffect(() => {
+      if (loading === false) {
+        if (authenticated.current === false) {
+          router.push("http://localhost:3000/login");
+          console.log(authenticated.current, loading);
+        } else if (authenticated.current === true) {
+          console.log("Loaded and authed")
+        }
+      }
+  }, [loading, authenticated, router])
+
+  useEffect(() => {
+    if (SID === null) {
+      router.push("http://localhost:3000/login")
+    }
+  }, [SID, router])
 
   return (
     <>

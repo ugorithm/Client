@@ -8,8 +8,8 @@ export default function useAuthorize() {
 
     const [data, setData] = useState(null);
     const [error, setError] = useState(false);
-    const [loading, setLoading] = useState(false);
-    const [authenticated, setAuthenticated] = useState(null);
+    const loading = useRef(true);
+    const authenticated = useRef(false);
 
 
     useEffect(() => {
@@ -19,21 +19,21 @@ export default function useAuthorize() {
 
         const fetchData = async () => {
             try {
-                setLoading(true);
                 const resp = await axios.post("https://server.ugorithm.repl.co/auth/getsession", payload)
                 setData(resp.data);
+                loading.current = false;
                 if (data?.authenticated === true) {
-                    setAuthenticated(true);
+                    authenticated.current = true;
                 } else {
-                    setAuthenticated(false);    
+                    authenticated.current = false;
                 }
             } catch (err) {
                 console.log("Error: " + err);
             }
 
         }
-        fetchData().then(setLoading(false))
-    }, [setLoading, SID, authenticated, data?.authenticated]);
+        fetchData()
+    }, [SID, data?.authenticated]);
 
     return { authenticated, loading, error };
 }

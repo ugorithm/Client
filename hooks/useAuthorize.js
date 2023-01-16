@@ -1,21 +1,39 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import useAuth from "../stores/authUser";
 
-export default function useAuthorize(ID) {
+export default function useAuthorize() {
+
+    const SID = useAuth((state) => state.SID);
+
     const [data, setData] = useState(null);
     const [error, setError] = useState(false);
-    const isLoading = useRef(false);
+    const loading = useRef(true);
+    const authenticated = useRef(false);
 
-    const fetchData = async () => {
-        const resp = await axios.get("https://server.ugorithm.repl.co/auth/db").then(isLoading.current = true)
-        setData(resp.data);
-    }
 
     useEffect(() => {
-        if (isLoading.current) return;
-        fetchData()
-        isLoading.current = false;
-    }, [ID]);
+        const payload = {
+            "sessionID": SID
+        };
 
-    return { data, isLoading, error };
+        const fetchData = async () => {
+            try {
+                const resp = await axios.post("https://server.ugorithm.repl.co/auth/getsession", payload)
+                setData(resp.data);
+                loading.current = false;
+                if (data?.authenticated === true) {
+                    authenticated.current = true;
+                } else {
+                    authenticated.current = false;
+                }
+            } catch (err) {
+                console.log("Error: " + err);
+            }
+
+        }
+        fetchData()
+    }, [SID, data?.authenticated]);
+
+    return { authenticated, loading, error };
 }

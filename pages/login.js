@@ -44,6 +44,10 @@ export default function Login() {
     router.prefetch("http://localhost:3000/dashboard")
   }, [router]);
 
+  function registerRedirect() {
+    router.push("http://localhost:3000/register")
+  }
+
   return (
     <>
       <Container>
@@ -52,6 +56,7 @@ export default function Login() {
             <TextInput label="Username" placeholder="you@mantine.dev" required ref={userRef} />
             <PasswordInput label="Password" placeholder="Your password" required mt="md" ref={passwordRef} />
             <Button fullWidth mt="xl" onClick={handleLogin}>Log in</Button>
+            <Button fullWidth mt="xl" onClick={registerRedirect}>Register</Button>
           </form>
         </Paper>
       </Container>

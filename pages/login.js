@@ -3,6 +3,9 @@ import useAuth from "../stores/authUser";
 import axios from "axios";
 import { useRouter } from "next/router";
 
+const url = process.env.web_url
+console.log(url);
+
 import {
   TextInput,
   PasswordInput,
@@ -33,19 +36,19 @@ export default function Login() {
       "username": userRef.current.value,
       "password": passwordRef.current.value
     }
-    
+
     const resp = await axios.post("https://Server.ugorithm.repl.co/auth/login", userPayload);
     const SIDPayload = resp.data["user"].SID;
     logIn(SIDPayload); // set SID state to retreived SID
-    router.push("http://localhost:3000/dashboard");
+    router.push(`https://${url}/dashboard`);
   }
 
   useEffect(() => {
-    router.prefetch("http://localhost:3000/dashboard")
+    router.prefetch(`${url}/dashboard`)
   }, [router]);
 
   function registerRedirect() {
-    router.push("http://localhost:3000/register")
+    router.push(`https://${url}/register`)
   }
 
   return (

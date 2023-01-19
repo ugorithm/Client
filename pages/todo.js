@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import useAuthorize from "../hooks/useAuthorize";
 import { useRouter } from "next/router"
 import useAuth from "../stores/authUser"
+import { FloatingLabelInput } from "../components/input";
 
 const url = process.env["web_url"]
 
@@ -33,9 +34,11 @@ export default function Todo() {
     }
   }, [SID, router])
 
+
+
   return (
     <>
-      <h1>Todo</h1>
+      <FloatingLabelInput />
     </>
   )
 }

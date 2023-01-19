@@ -1,21 +1,41 @@
 import { useEffect, useState } from "react";
-import { HeaderMegaMenu } from "../components/header"
-import useAuth from "../stores/authUser";
+import useAuthorize from "../hooks/useAuthorize";
+import { useRouter } from "next/router"
+import useAuth from "../stores/authUser"
+
+const url = process.env["web_url"]
 
 export default function Todo() {
 
-    const SID = useAuth((state) => state.SID);
-    const [loggedIn, setLoggedin] = useState(false);
+  const { authenticated, loading, error } = useAuthorize()
 
-    useEffect(() => {
-        if (!SID) {
-            setLoggedin(false);
-        }
-    }, [SID])
+  const router = useRouter()
 
-    return (
-        <>
-            <HeaderMegaMenu page="Todo" login={loggedIn} />
-        </>
-    )
+  const SID = useAuth((state) => state.SID)
+
+  useEffect(() => {
+    if (error) console.log(error)
+  }, [error])
+
+  useEffect(() => {
+    if (loading === false) {
+      if (authenticated.current === false) {
+        router.push(`https://${url}/login`)
+      } else if (authenticated.current === true) {
+        console.log("Loaded and authed")
+      }
+    }
+  }, [loading, authenticated, router])
+
+  useEffect(() => {
+    if (SID === null) {
+      router.push(`https://${url}/login`)
+    }
+  }, [SID, router])
+
+  return (
+    <>
+      <h1>Todo</h1>
+    </>
+  )
 }

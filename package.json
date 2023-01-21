@@ -13,6 +13,7 @@
     "@mantine/ds": "^5.10.0",
     "@mantine/hooks": "^5.10.0",
     "@mantine/next": "^5.10.0",
+    "@nextui-org/react": "^1.0.0-beta.12",
     "@tabler/icons": "^1.119.0",
     "axios": "^1.2.2",
     "next": "^12.2.0",

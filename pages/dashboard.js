@@ -16,8 +16,14 @@ export default function Dashboard() {
   const handleLogOut = (e) => {
     e.preventDefault();
     logout();
-    router.push(`https://${url}/login`)
+    router.push(`${url}/login`)
   }
+
+  const goToTodo = (e) => {
+    e.preventDefault();
+    router.push(`${url}/todo`)
+  }
+
   const { authenticated, loading, error } = useAuthorize();
 
   if (error) console.log("There's an error");
@@ -25,7 +31,7 @@ export default function Dashboard() {
   useEffect(() => {
     if (loading === false) {
       if (authenticated.current === false) {
-        router.push(`https://${url}/login`);
+        router.push(`${url}/login`);
         console.log(authenticated.current, loading);
       } else if (authenticated.current === true) {
         console.log("Loaded and authed")
@@ -35,7 +41,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (SID === null) {
-      router.push(`https://${url}/login`)
+      router.push(`${url}/login`)
     }
   }, [SID, router])
 
@@ -43,6 +49,7 @@ export default function Dashboard() {
     <>
       <h1>Dashboard</h1>
       <button onClick={handleLogOut}>Logout</button>
+      <button onClick={goToTodo}>Todo</button>
     </>
   )
 }

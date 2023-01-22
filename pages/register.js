@@ -44,7 +44,7 @@ export default function Register() {
 
     try {
       const resp = await axios.post("https://Server.ugorithm.repl.co/auth/register", userPayload);
-      router.push(`https://${url}/login`);
+      router.push(`${url}/login`);
     } catch (error) {
       console.error(error);
     }
@@ -52,11 +52,11 @@ export default function Register() {
   }
 
   useEffect(() => {
-    router.prefetch(`https://${url}/login`)
+    router.prefetch(`${url}/login`)
   }, [router]);
 
   const loginRedirect = async () => {
-    router.push(`https://${url}/login`);
+    router.push(`${url}/login`);
   }
 
   return (

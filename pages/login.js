@@ -40,7 +40,7 @@ export default function Login() {
     const resp = await axios.post("https://Server.ugorithm.repl.co/auth/login", userPayload);
     const SIDPayload = resp.data["user"].SID;
     logIn(SIDPayload); // set SID state to retreived SID
-    router.push(`https://${url}/dashboard`);
+    router.push(`${url}/dashboard`);
   }
 
   useEffect(() => {
@@ -48,7 +48,7 @@ export default function Login() {
   }, [router]);
 
   function registerRedirect() {
-    router.push(`https://${url}/register`)
+    router.push(`${url}/register`)
   }
 
   return (
